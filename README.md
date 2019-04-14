@@ -1,6 +1,7 @@
 # scala-spark-extensions
 
 [![Build Status](https://travis-ci.com/gopal-tiwari/scala-spark-extensions.svg?branch=master)](https://travis-ci.com/gopal-tiwari/scala-spark-extensions)
+[![Build Status](https://travis-ci.com/gopal-tiwari/scala-spark-extensions.svg?branch=develop)](https://travis-ci.com/gopal-tiwari/scala-spark-extensions)
 
 This project is intended to provide handy useful extensions methods for working with spark project.
 

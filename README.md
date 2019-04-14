@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/gopal-tiwari/scala-spark-extensions.svg?branch=master)](https://travis-ci.com/gopal-tiwari/scala-spark-extensions)
 [![Build Status](https://travis-ci.com/gopal-tiwari/scala-spark-extensions.svg?branch=develop)](https://travis-ci.com/gopal-tiwari/scala-spark-extensions)
-
+[![License](http://img.shields.io/:license-Apache%202-red.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
 This project is intended to provide handy useful extensions methods for working with spark project.
 
 scala-spark-extensions is built using [Apache Maven](http://maven.apache.org/).

@@ -16,6 +16,20 @@
 
 package org.connected.commons.scala
 
+/**
+  * Contains re usable extensions / implicits to be used in other modules.
+  */
 object ScalaUtils {
+
+  implicit class CheckInt(val x: String) extends AnyVal {
+    /**
+      * Used to check if a string is a valid number grater than 0.
+      *
+      * @return true if string is a valid number else false.
+      */
+    def isPositiveNumber: Boolean = checkPositiveNumber(x)
+  }
+
+  def checkPositiveNumber(x: String): Boolean = if ((x.trim.length > 0) && (x.trim forall Character.isDigit) && (x.trim.toLong > 0)) true else false
 
 }

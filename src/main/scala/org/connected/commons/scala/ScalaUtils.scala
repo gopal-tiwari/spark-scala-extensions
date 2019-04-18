@@ -32,4 +32,12 @@ object ScalaUtils {
 
   def checkPositiveNumber(x: String): Boolean = if ((x.trim.length > 0) && (x.trim forall Character.isDigit) && (x.trim.toLong > 0)) true else false
 
+  implicit class CheckIntArr(val x: Array[String]) extends AnyVal {
+    /**
+      * Used to check if all elements in a string array are representing a valid number grater than 0.
+      *
+      * @return true if string is a valid number else false.
+      */
+    def isPositiveNumber = (x forall checkPositiveNumber)
+  }
 }

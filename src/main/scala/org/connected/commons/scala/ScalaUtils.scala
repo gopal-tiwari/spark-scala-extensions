@@ -38,6 +38,6 @@ object ScalaUtils {
       *
       * @return true if string is a valid number else false.
       */
-    def isPositiveNumber = (x forall checkPositiveNumber)
+    def isPositiveNumber:Boolean = x forall checkPositiveNumber
   }
 }

@@ -16,6 +16,8 @@
 
 package org.connected.commons.scala
 
+import org.joda.time.format.DateTimeFormat
+
 /**
   * Contains re usable extensions / implicits to be used in other modules.
   */
@@ -38,6 +40,26 @@ object ScalaUtils {
       *
       * @return true if string is a valid number else false.
       */
-    def isPositiveNumber:Boolean = x forall checkPositiveNumber
+    def isPositiveNumber: Boolean = x forall checkPositiveNumber
+  }
+
+  implicit class CheckDate(val dateStr: String) {
+    /**
+      * To check whether a given string is a valid date with given pattern
+      *
+      * @param datePattern date pattern to be matched with.
+      * @return Either as Left with Exception or Right with DateTime object.
+      */
+    def parseDate(datePattern: String) = {
+      tryParseDate(dateStr, datePattern)
+    }
+  }
+
+  private def tryParseDate(inputDateStr: String, datePattern: String) = try {
+    val fmt = DateTimeFormat forPattern datePattern
+    Right(fmt parseDateTime inputDateStr)
+  } catch {
+    case e: org.joda.time.IllegalFieldValueException => Left(e)
+    case e: IllegalArgumentException => Left(e)
   }
 }

@@ -21,6 +21,14 @@ import org.apache.spark.sql.SparkSession
 
 object HDFSUtils {
 
+  /**
+    * Used to move files in HDFS from one directory to another.
+    * @param sparkSession to be used to connect to HDFS.
+    * @param fromFilePath is the path URI of source file.
+    * @param toFilePath is the path URI of target directory.
+    * @param deleteSourceFile will be set to true to delete source file else will be false.
+    * @return a boolean representing the status of task completion.
+    */
   def moveFileWithinHDFS(sparkSession:SparkSession,fromFilePath: String, toFilePath: String, deleteSourceFile: Boolean): Boolean = {
 
     val conf = sparkSession.sparkContext.hadoopConfiguration
@@ -29,15 +37,19 @@ object HDFSUtils {
     val dstPath = new Path(toFilePath);
     val dstFs = dstPath.getFileSystem(conf);
     FileUtil.copy(srcFs, srcPath, dstFs, dstPath, deleteSourceFile, conf);
-
   }
 
+  /**
+    * Delete a file in HDFS.
+    * @param sparkSession to be used to connect to HDFS.
+    * @param filePath the path to delete.
+    * @return a boolean representing the status of task completion.
+    */
   def deleteFileInHDFS(sparkSession: SparkSession,filePath: String): Boolean = {
     val conf = sparkSession.sparkContext.hadoopConfiguration
     val deletePath = new Path(filePath);
     val deleteFs = deletePath.getFileSystem(conf);
     deleteFs.delete(deletePath, false)
-
   }
 }
 

@@ -16,7 +16,21 @@
 
 package org.connected.commons.hdfs
 
+import org.apache.hadoop.fs.{FileUtil, Path}
+import org.apache.spark.sql.SparkSession
+
 object HDFSUtils {
+
+  def moveFileWithinHDFS(sparkSession:SparkSession,fromFilePath: String, toFilePath: String, deleteSourceFile: Boolean): Boolean = {
+
+    val conf = sparkSession.sparkContext.hadoopConfiguration
+    val srcPath = new Path(fromFilePath);
+    val srcFs = srcPath.getFileSystem(conf);
+    val dstPath = new Path(toFilePath);
+    val dstFs = dstPath.getFileSystem(conf);
+    FileUtil.copy(srcFs, srcPath, dstFs, dstPath, deleteSourceFile, conf);
+
+  }
 
 }
 

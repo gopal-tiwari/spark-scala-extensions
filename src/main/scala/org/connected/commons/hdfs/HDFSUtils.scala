@@ -32,5 +32,12 @@ object HDFSUtils {
 
   }
 
+  def deleteFileInHDFS(sparkSession: SparkSession,filePath: String): Boolean = {
+    val conf = sparkSession.sparkContext.hadoopConfiguration
+    val deletePath = new Path(filePath);
+    val deleteFs = deletePath.getFileSystem(conf);
+    deleteFs.delete(deletePath, false)
+
+  }
 }
 

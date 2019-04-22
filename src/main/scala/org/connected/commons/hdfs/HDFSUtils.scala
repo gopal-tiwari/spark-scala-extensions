@@ -32,11 +32,11 @@ object HDFSUtils {
   def moveFileWithinHDFS(sparkSession:SparkSession,fromFilePath: String, toFilePath: String, deleteSourceFile: Boolean): Boolean = {
 
     val conf = sparkSession.sparkContext.hadoopConfiguration
-    val srcPath = new Path(fromFilePath);
-    val srcFs = srcPath.getFileSystem(conf);
-    val dstPath = new Path(toFilePath);
-    val dstFs = dstPath.getFileSystem(conf);
-    FileUtil.copy(srcFs, srcPath, dstFs, dstPath, deleteSourceFile, conf);
+    val srcPath = new Path(fromFilePath)
+    val srcFs = srcPath.getFileSystem(conf)
+    val dstPath = new Path(toFilePath)
+    val dstFs = dstPath.getFileSystem(conf)
+    FileUtil.copy(srcFs, srcPath, dstFs, dstPath, deleteSourceFile, conf)
   }
 
   /**
@@ -47,8 +47,8 @@ object HDFSUtils {
     */
   def deleteFileInHDFS(sparkSession: SparkSession,filePath: String): Boolean = {
     val conf = sparkSession.sparkContext.hadoopConfiguration
-    val deletePath = new Path(filePath);
-    val deleteFs = deletePath.getFileSystem(conf);
+    val deletePath = new Path(filePath)
+    val deleteFs = deletePath.getFileSystem(conf)
     deleteFs.delete(deletePath, false)
   }
 }

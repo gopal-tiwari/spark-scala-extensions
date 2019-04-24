@@ -68,6 +68,15 @@ object HDFSUtils {
     fs.isFile(path)
   }
 
+
+  /**
+    * Delete all files present in a directory in HDFS based on modification days elapsed.
+    * @param sparkSession to be used to connect to HDFS.
+    * @param directoryPath to be cleaned up.
+    * @param olderThanDays no of days used to compare modification days passed and older files.
+    * @param referenceDate Timestamp to be used as latest date to compare. In most of the cases it will be current timestamp.
+    * @return a boolean representing the status of task completion.
+    */
   def deleteOldFiles(sparkSession: SparkSession, directoryPath: String, olderThanDays:Int, referenceDate:Timestamp): Boolean = {
     val conf = sparkSession.sparkContext.hadoopConfiguration
     val fs = FileSystem.get(conf)

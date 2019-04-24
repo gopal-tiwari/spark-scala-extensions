@@ -16,7 +16,7 @@
 
 package org.connected.commons.hdfs
 
-import org.apache.hadoop.fs.{FileUtil, Path}
+import org.apache.hadoop.fs.{FileSystem, FileUtil, Path}
 import org.apache.spark.sql.SparkSession
 
 object HDFSUtils {
@@ -50,6 +50,13 @@ object HDFSUtils {
     val deletePath = new Path(filePath)
     val deleteFs = deletePath.getFileSystem(conf)
     deleteFs.delete(deletePath, false)
+  }
+
+  def isHDFSFileExists(sparkSession: SparkSession,filePath: String): Boolean = {
+    val conf = sparkSession.sparkContext.hadoopConfiguration
+    val fs = FileSystem.get(conf)
+    val path = new Path(filePath)
+    fs.isFile(path)
   }
 }
 

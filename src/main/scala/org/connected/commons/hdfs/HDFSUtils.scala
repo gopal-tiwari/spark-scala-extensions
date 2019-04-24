@@ -16,7 +16,10 @@
 
 package org.connected.commons.hdfs
 
-import org.apache.hadoop.fs.{FileSystem, FileUtil, Path}
+import java.sql.Timestamp
+import java.util.Calendar
+
+import org.apache.hadoop.fs.{FileSystem, FileUtil, ParentNotDirectoryException, Path}
 import org.apache.spark.sql.SparkSession
 
 object HDFSUtils {
@@ -63,6 +66,35 @@ object HDFSUtils {
     val fs = FileSystem.get(conf)
     val path = new Path(filePath)
     fs.isFile(path)
+  }
+
+  def deleteOldFiles(sparkSession: SparkSession, directoryPath: String, olderThanDays:Int, referenceDate:Timestamp): Boolean = {
+    val conf = sparkSession.sparkContext.hadoopConfiguration
+    val fs = FileSystem.get(conf)
+    val dirPath = new Path(directoryPath)
+
+    if(fs.isDirectory(dirPath)) {
+      val cal = Calendar.getInstance
+      cal.setTime(referenceDate)
+      cal.add(Calendar.DAY_OF_WEEK, -olderThanDays)
+      val backDate = new Timestamp(cal.getTime.getTime)
+      println("Removing files older than :" + backDate.toString)
+      val status = fs.listStatus(dirPath)
+      status.map(x => {
+        if (x.isFile && backDate.after(new Timestamp(fs.getFileStatus(x.getPath).getModificationTime))) {
+          try {
+            fs.delete(x.getPath, false)
+          }
+          catch
+            {
+              case e: Exception => e.printStackTrace()
+            }
+        }
+      })
+      true
+    }
+    else
+      throw new ParentNotDirectoryException("parent is not a dir")
   }
 }
 

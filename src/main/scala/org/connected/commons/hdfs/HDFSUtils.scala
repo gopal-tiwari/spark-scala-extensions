@@ -52,6 +52,12 @@ object HDFSUtils {
     deleteFs.delete(deletePath, false)
   }
 
+  /**
+    * Check a file exists in HDFS or not.
+    * @param sparkSession to be used to connect to HDFS.
+    * @param filePath file URI to be checked.
+    * @return true if file exists else false.
+    */
   def isHDFSFileExists(sparkSession: SparkSession,filePath: String): Boolean = {
     val conf = sparkSession.sparkContext.hadoopConfiguration
     val fs = FileSystem.get(conf)

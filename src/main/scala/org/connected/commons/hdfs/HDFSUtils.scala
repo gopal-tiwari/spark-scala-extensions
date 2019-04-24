@@ -26,13 +26,14 @@ object HDFSUtils {
 
   /**
     * Used to move files in HDFS from one directory to another.
-    * @param sparkSession to be used to connect to HDFS.
-    * @param fromFilePath is the path URI of source file.
-    * @param toFilePath is the path URI of target directory.
+    *
+    * @param sparkSession     to be used to connect to HDFS.
+    * @param fromFilePath     is the path URI of source file.
+    * @param toFilePath       is the path URI of target directory.
     * @param deleteSourceFile will be set to true to delete source file else will be false.
     * @return a boolean representing the status of task completion.
     */
-  def moveFileWithinHDFS(sparkSession:SparkSession,fromFilePath: String, toFilePath: String, deleteSourceFile: Boolean): Boolean = {
+  def moveFileWithinHDFS(sparkSession: SparkSession, fromFilePath: String, toFilePath: String, deleteSourceFile: Boolean): Boolean = {
 
     val conf = sparkSession.sparkContext.hadoopConfiguration
     val srcPath = new Path(fromFilePath)
@@ -44,11 +45,12 @@ object HDFSUtils {
 
   /**
     * Delete a file in HDFS.
+    *
     * @param sparkSession to be used to connect to HDFS.
-    * @param filePath the path to delete.
+    * @param filePath     the path to delete.
     * @return a boolean representing the status of task completion.
     */
-  def deleteFileInHDFS(sparkSession: SparkSession,filePath: String): Boolean = {
+  def deleteFileInHDFS(sparkSession: SparkSession, filePath: String): Boolean = {
     val conf = sparkSession.sparkContext.hadoopConfiguration
     val deletePath = new Path(filePath)
     val deleteFs = deletePath.getFileSystem(conf)
@@ -57,11 +59,12 @@ object HDFSUtils {
 
   /**
     * Check a file exists in HDFS or not.
+    *
     * @param sparkSession to be used to connect to HDFS.
-    * @param filePath file URI to be checked.
+    * @param filePath     file URI to be checked.
     * @return true if file exists else false.
     */
-  def isHDFSFileExists(sparkSession: SparkSession,filePath: String): Boolean = {
+  def isHDFSFileExists(sparkSession: SparkSession, filePath: String): Boolean = {
     val conf = sparkSession.sparkContext.hadoopConfiguration
     val fs = FileSystem.get(conf)
     val path = new Path(filePath)
@@ -71,18 +74,19 @@ object HDFSUtils {
 
   /**
     * Delete all files present in a directory in HDFS based on modification days elapsed.
-    * @param sparkSession to be used to connect to HDFS.
+    *
+    * @param sparkSession  to be used to connect to HDFS.
     * @param directoryPath to be cleaned up.
     * @param olderThanDays no of days used to compare modification days passed and older files.
     * @param referenceDate Timestamp to be used as latest date to compare. In most of the cases it will be current timestamp.
     * @return a boolean representing the status of task completion.
     */
-  def deleteOldFiles(sparkSession: SparkSession, directoryPath: String, olderThanDays:Int, referenceDate:Timestamp): Boolean = {
+  def deleteOldFiles(sparkSession: SparkSession, directoryPath: String, olderThanDays: Int, referenceDate: Timestamp): Boolean = {
     val conf = sparkSession.sparkContext.hadoopConfiguration
     val fs = FileSystem.get(conf)
     val dirPath = new Path(directoryPath)
 
-    if(fs.isDirectory(dirPath)) {
+    if (fs.isDirectory(dirPath)) {
       val cal = Calendar.getInstance
       cal.setTime(referenceDate)
       cal.add(Calendar.DAY_OF_WEEK, -olderThanDays)
@@ -94,10 +98,9 @@ object HDFSUtils {
           try {
             fs.delete(x.getPath, false)
           }
-          catch
-            {
-              case e: Exception => e.printStackTrace()
-            }
+          catch {
+            case e: Exception => e.printStackTrace()
+          }
         }
       })
       true

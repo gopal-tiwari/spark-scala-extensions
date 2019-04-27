@@ -22,6 +22,15 @@ import org.apache.spark.sql.SparkSession
   * Contains various Hive database related utilities.
   */
 object HiveUtils {
+
+  /**
+    * Used to drop a table from Hive.
+    *
+    * @param sparkSession to connect to Hive metastore.
+    * @param databaseName database name where to look for table.
+    * @param tableName    table name to be dropped.
+    * @return true if tables is dropped, false if table is not present in Database or if task failed.
+    */
   def dropTable(sparkSession: SparkSession, databaseName: String, tableName: String): Boolean = {
     if (!sparkSession.sql(s"show tables in ${databaseName.trim.toLowerCase()}").where(s"tableName = '${tableName.trim.toLowerCase()}'").collect().isEmpty) {
       sparkSession.sql(s"""alter table ${databaseName.trim.toLowerCase()}.${tableName.trim.toLowerCase()} set TBLPROPERTIES("auto.purge" = "true")""")

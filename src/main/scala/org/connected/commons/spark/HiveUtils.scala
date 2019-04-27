@@ -16,9 +16,17 @@
 
 package org.connected.commons.spark
 
+import org.apache.spark.sql.SparkSession
+
 /**
   * Contains various Hive database related utilities.
   */
 object HiveUtils {
-
+  def dropTable(sparkSession: SparkSession, databaseName: String, tableName: String): Boolean = {
+    if (!sparkSession.sql(s"show tables in ${databaseName.trim.toLowerCase()}").where(s"tableName = '${tableName.trim.toLowerCase()}'").collect().isEmpty) {
+      sparkSession.sql(s"""alter table ${databaseName.trim.toLowerCase()}.${tableName.trim.toLowerCase()} set TBLPROPERTIES("auto.purge" = "true")""")
+      sparkSession.sql(s"drop table if exists  ${databaseName.trim.toLowerCase()}.${tableName.trim.toLowerCase()} purge")
+      true
+    } else false
+  }
 }

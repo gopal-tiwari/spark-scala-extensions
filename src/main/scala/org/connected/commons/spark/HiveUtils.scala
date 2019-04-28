@@ -38,4 +38,11 @@ object HiveUtils {
       true
     } else false
   }
+
+  def isDatabaseExists(sparkSession: SparkSession, databaseName: String): Boolean = {
+    if (!sparkSession.sql(s"SHOW databases ").where(s"database_name = '${databaseName.trim.toLowerCase}'").collect().isEmpty)
+      true
+    else
+      false
+  }
 }

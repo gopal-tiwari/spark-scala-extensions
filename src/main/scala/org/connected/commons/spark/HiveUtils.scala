@@ -39,6 +39,13 @@ object HiveUtils {
     } else false
   }
 
+  /**
+    * Used to check if a database is present.
+    *
+    * @param sparkSession to connect to Hive metastore.
+    * @param databaseName database name to check.
+    * @return true is database exists else false.
+    */
   def isDatabaseExists(sparkSession: SparkSession, databaseName: String): Boolean = {
     if (!sparkSession.sql(s"SHOW databases ").where(s"database_name = '${databaseName.trim.toLowerCase}'").collect().isEmpty)
       true

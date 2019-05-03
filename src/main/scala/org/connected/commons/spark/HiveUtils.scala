@@ -53,6 +53,13 @@ object HiveUtils {
       false
   }
 
+  /**
+    * This method will be used to return if a table exists in db or not
+    * @param sparkSession  to connect to Hive metastore.
+    * @param tableName    string containing table name to be checked.
+    * @param databaseName where to check for the table.
+    * @return true if table exists else false.
+    */
   def isTableExists(sparkSession: SparkSession, tableName: String, databaseName: String): Boolean = {
     if (tableName.trim.length == 0 || databaseName.trim.length == 0)
       return false

@@ -52,4 +52,13 @@ object HiveUtils {
     else
       false
   }
+
+  def isTableExists(sparkSession: SparkSession, tableName: String, databaseName: String): Boolean = {
+    if (tableName.trim.length == 0 || databaseName.trim.length == 0)
+      return false
+    if (!sparkSession.sql(s"show tables in ${databaseName.trim.toLowerCase} ").where(s"tableName = '${tableName.trim.toLowerCase}'").collect().isEmpty)
+      true
+    else
+      false
+  }
 }

@@ -68,4 +68,12 @@ object HiveUtils {
     else
       false
   }
+
+  def isTableExists(sparkSession: SparkSession, tableNameWithDBName: String): Boolean = {
+    if (tableNameWithDBName.trim.toLowerCase().split('.').length != 2)
+      return false
+    val dbName = tableNameWithDBName.trim.toLowerCase().split('.')(0)
+    val tableName = tableNameWithDBName.trim.toLowerCase().split('.')(1)
+    isTableExists(sparkSession, tableName, dbName)
+  }
 }

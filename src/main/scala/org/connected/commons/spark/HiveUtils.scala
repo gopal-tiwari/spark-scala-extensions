@@ -55,7 +55,8 @@ object HiveUtils {
 
   /**
     * This method will be used to return if a table exists in db or not
-    * @param sparkSession  to connect to Hive metastore.
+    *
+    * @param sparkSession to connect to Hive metastore.
     * @param tableName    string containing table name to be checked.
     * @param databaseName where to check for the table.
     * @return true if table exists else false.
@@ -72,7 +73,7 @@ object HiveUtils {
   /**
     * To check if a table exists or not.
     *
-    * @param sparkSession         to connect to Hive metastore.
+    * @param sparkSession        SparkSession object to connect to Hive metastore.
     * @param tableNameWithDBName string containing table name with database name seperated by a '.' e.g. DBNAME.TABLENAME
     * @return true if table exists else false.
     */

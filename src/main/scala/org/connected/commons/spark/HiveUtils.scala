@@ -86,7 +86,15 @@ object HiveUtils {
   }
 
 
-
+  /**
+    * To check whether given column is present in given table or not.
+    *
+    * @param sparkSession  to connect to Hive metastore.
+    * @param columnName   string containing column name to be checked.
+    * @param tableName    string containing table name where to check for column.
+    * @param databaseName where to check for the table.
+    * @return true if column exists in table else false.
+    */
   def isColumnExists(sparkSession: SparkSession, columnName: String, tableName: String, databaseName: String): Boolean = {
     println("Checking the column existence" + columnName +"," + tableName + "," + databaseName)
     sparkSession.sql(s"show columns in ${databaseName.trim.toLowerCase}.${tableName.trim.toLowerCase}").show()

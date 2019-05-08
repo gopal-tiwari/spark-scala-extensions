@@ -84,4 +84,22 @@ object HiveUtils {
     val tableName = tableNameWithDBName.trim.toLowerCase().split('.')(1)
     isTableExists(sparkSession, tableName, dbName)
   }
+
+
+
+  def isColumnExists(sparkSession: SparkSession, columnName: String, tableName: String, databaseName: String): Boolean = {
+    println("Checking the column existence" + columnName +"," + tableName + "," + databaseName)
+    sparkSession.sql(s"show columns in ${databaseName.trim.toLowerCase}.${tableName.trim.toLowerCase}").show()
+    import sparkSession.implicits._
+    if (columnName.trim.length == 0 || tableName.trim.length == 0 || databaseName.trim.length == 0)
+      return false
+    if (sparkSession.sql(s"show columns in ${databaseName.trim.toLowerCase}.${tableName.trim.toLowerCase}")
+      .select("col_name")
+      .map(r => r.get(0).toString.trim.toLowerCase)
+      .collect()
+      .contains(columnName.trim.toLowerCase))
+      true
+    else
+      false
+  }
 }

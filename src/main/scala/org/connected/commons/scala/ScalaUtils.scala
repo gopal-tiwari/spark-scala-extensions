@@ -21,9 +21,11 @@ import org.joda.time.format.DateTimeFormat
 /**
   * Contains re usable extensions / implicits to be used in other modules.
   */
-object ScalaUtils {
+object ScalaUtils
+{
 
-  implicit class CheckInt(val x: String) extends AnyVal {
+  implicit class CheckInt(val x: String) extends AnyVal
+  {
     /**
       * Used to check if a string is a valid number grater than 0.
       *
@@ -34,7 +36,8 @@ object ScalaUtils {
 
   def checkPositiveNumber(x: String): Boolean = if ((x.trim.length > 0) && (x.trim forall Character.isDigit) && (x.trim.toLong > 0)) true else false
 
-  implicit class CheckIntArr(val x: Array[String]) extends AnyVal {
+  implicit class CheckIntArr(val x: Array[String]) extends AnyVal
+  {
     /**
       * Used to check if all elements in a string array are representing a valid number grater than 0.
       *
@@ -43,22 +46,33 @@ object ScalaUtils {
     def isPositiveNumber: Boolean = x forall checkPositiveNumber
   }
 
-  implicit class CheckDate(val dateStr: String) {
+  implicit class CheckDate(val dateStr: String)
+  {
     /**
       * To check whether a given string is a valid date with given pattern
       *
       * @param datePattern date pattern to be matched with.
       * @return Either as Left with Exception or Right with DateTime object.
       */
-    def parseDate(datePattern: String) = {
+    def parseDate(datePattern: String) =
+    {
       tryParseDate(dateStr, datePattern)
     }
   }
 
-  private def tryParseDate(inputDateStr: String, datePattern: String) = try {
+  /**
+    * To check whether a given string is a valid date with given pattern
+    *
+    * @param inputDateStr String with date to be parsed.
+    * @param datePattern  date pattern to be matched with.
+    * @return Either as Left with Exception or Right with DateTime object.
+    */
+  private def tryParseDate(inputDateStr: String, datePattern: String) = try
+  {
     val fmt = DateTimeFormat forPattern datePattern
     Right(fmt parseDateTime inputDateStr)
-  } catch {
+  } catch
+  {
     case e: org.joda.time.IllegalFieldValueException => Left(e)
     case e: IllegalArgumentException => Left(e)
   }

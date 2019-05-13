@@ -20,6 +20,7 @@ object StringHelpers
 {
   /**
     * If str is surrounded by quotes it return the content between the quotes
+    *
     * @param str String needs to be unquoted.
     * @return it return the content between the quotes.
     */
@@ -30,4 +31,7 @@ object StringHelpers
     else
       str
   }
+
+  def snakify(name: String) = name.replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2").replaceAll("([a-z\\d])([A-Z])", "$1_$2").toLowerCase
+
 }

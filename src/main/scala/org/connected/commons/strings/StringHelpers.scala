@@ -32,6 +32,15 @@ object StringHelpers
       str
   }
 
+  /**
+    * Turn a string of format "FooBar" into snake case "foo_bar"
+    *
+    * Note: snakify is not reversible, ie. in general the following will _not_ be true:
+    *
+    * s == camelify(snakify(s))
+    *
+    * @return the underscored string
+    */
   def snakify(name: String) = name.replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2").replaceAll("([a-z\\d])([A-Z])", "$1_$2").toLowerCase
 
 }

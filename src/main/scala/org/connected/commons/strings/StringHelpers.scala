@@ -43,4 +43,17 @@ object StringHelpers
     */
   def snakify(name: String) = name.replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2").replaceAll("([a-z\\d])([A-Z])", "$1_$2").toLowerCase
 
+  def camelify(name : String): String = {
+    def loop(x : List[Char]): List[Char] = (x: @unchecked) match {
+      case '_' :: '_' :: rest => loop('_' :: rest)
+      case '_' :: c :: rest => Character.toUpperCase(c) :: loop(rest)
+      case '_' :: Nil => Nil
+      case c :: rest => c :: loop(rest)
+      case Nil => Nil
+    }
+    if (name == null)
+      ""
+    else
+      loop('_' :: name.toList).mkString
+  }
 }

@@ -43,6 +43,14 @@ object StringHelpers
     */
   def snakify(name: String) = name.replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2").replaceAll("([a-z\\d])([A-Z])", "$1_$2").toLowerCase
 
+  /**
+    * Turns a string of format "foo_bar" into camel case "FooBar"
+    *
+    * Functional code courtesy of Jamie Webb (j@jmawebb.cjb.net) 2006/11/28
+    * @param name the String to CamelCase
+    *
+    * @return the CamelCased string
+    */
   def camelify(name : String): String = {
     def loop(x : List[Char]): List[Char] = (x: @unchecked) match {
       case '_' :: '_' :: rest => loop('_' :: rest)

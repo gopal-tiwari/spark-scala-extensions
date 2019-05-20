@@ -73,12 +73,12 @@ object StringHelpers
       case "" => "n/a"
       case s => s
     }).toLowerCase
-    val sb = new GoodSB
+    val sb = new StringBuilder
     capify(tmp, 0, 250, false, false, sb)
     sb.toString
   }
 
-  private def capify(in: String, pos: Int, max: Int, lastLetter: Boolean, lastSymbol: Boolean, out: GoodSB): Unit = {
+  private def capify(in: String, pos: Int, max: Int, lastLetter: Boolean, lastSymbol: Boolean, out: StringBuilder ): Unit = {
     if (pos >= max || pos >= in.length) return
     else {
       in.charAt(pos) match {

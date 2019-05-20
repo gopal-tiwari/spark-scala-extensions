@@ -64,4 +64,17 @@ object StringHelpers
     else
       loop('_' :: name.toList).mkString
   }
+
+  def capify(in: String): String = {
+    val tmp = ((in match {
+      case null => ""
+      case s => s
+    }).trim match {
+      case "" => "n/a"
+      case s => s
+    }).toLowerCase
+    val sb = new GoodSB
+    capify(tmp, 0, 250, false, false, sb)
+    sb.toString
+  }
 }

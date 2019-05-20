@@ -77,4 +77,17 @@ object StringHelpers
     capify(tmp, 0, 250, false, false, sb)
     sb.toString
   }
+
+  private def capify(in: String, pos: Int, max: Int, lastLetter: Boolean, lastSymbol: Boolean, out: GoodSB): Unit = {
+    if (pos >= max || pos >= in.length) return
+    else {
+      in.charAt(pos) match {
+        case c if Character.isDigit(c) => out.append(c); capify(in, pos + 1, max, false, false, out)
+        case c if Character.isLetter(c) => out.append(if (lastLetter) c else Character.toUpperCase(c)) ; capify(in, pos + 1, max, true, false, out)
+        case c if (c == ' ' || c == '_') && !lastSymbol => out.append(c) ; capify(in, pos + 1, max, false, true, out)
+        case _ => capify(in, pos + 1, max, false, true, out)
+      }
+    }
+  }
+
 }

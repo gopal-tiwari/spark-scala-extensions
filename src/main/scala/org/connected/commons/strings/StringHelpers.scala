@@ -65,6 +65,11 @@ object StringHelpers
       loop('_' :: name.toList).mkString
   }
 
+  /**
+    * Capitalize every "word" in the string. A word is either separated by spaces or underscores.
+    * @param in string to capify
+    * @return the capified string
+    */
   def capify(in: String): String = {
     val tmp = ((in match {
       case null => ""
@@ -78,6 +83,11 @@ object StringHelpers
     sb.toString
   }
 
+  /**
+    * Replaces the groups found in the msg string with a replacement according to the value found in the subst Map
+    * @param msg string where replacements should be done
+    * @param subst map of [regular expression with groups, replacement]
+    */
   private def capify(in: String, pos: Int, max: Int, lastLetter: Boolean, lastSymbol: Boolean, out: StringBuilder ): Unit = {
     if (pos >= max || pos >= in.length) return
     else {

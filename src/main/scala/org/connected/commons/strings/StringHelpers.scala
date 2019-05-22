@@ -100,6 +100,10 @@ object StringHelpers
     }
   }
 
+  /**
+    * Remove all the characters from a string exception a-z, A-Z, 0-9, and '_'
+    * @return the cleaned string and an empty string if the input is null
+    */
   def onlyCharsNum(in : String) =  if (in == null) "" else in.replaceAll("[^a-zA-Z0-9_]", "")
 
 }

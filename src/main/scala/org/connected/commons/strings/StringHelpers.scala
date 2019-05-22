@@ -100,4 +100,6 @@ object StringHelpers
     }
   }
 
+  def onlyCharsNum(in : String) =  if (in == null) "" else in.replaceAll("[^a-zA-Z0-9_]", "")
+
 }
